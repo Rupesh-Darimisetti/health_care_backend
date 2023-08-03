@@ -16,53 +16,50 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "doctor_details")
-public class DoctorDetails implements Serializable {
+public class DoctorDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="doctor_id",nullable = false,updatable = false, columnDefinition = "numeric(8)")
-    private  Long id;
+    @Column(name = "doctor_id", nullable = false)
+    private Long doctorId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="h_id",referencedColumnName = "h_id")
-    private HospitalAccount hospitalAccount;
+    @Column(name = "h_id", nullable = false)
+    private Long hId;
 
-    @Column(nullable = false,updatable = false)
-    private String doctorCode;
-
-    @Column(name = "first_name",nullable = false, length = 30)
+    @Column(name = "first_name", length = 30, nullable = false)
     private String firstName;
 
-    @Column(name = "last_name",nullable = false, length = 30)
+    @Column(name = "last_name", length = 30, nullable = false)
     private String lastName;
 
-    // setting the type of enum as string for the db
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender",columnDefinition="varchar(30)",nullable = false)
+    @Column(name = "gender", length = 30, nullable = false)
     private genderEnum gender;
 
-    @Column(name = "age",nullable = false,length = 8)
+    @Column(name = "age", nullable = false)
     private Long age;
 
-    @Column(name = "specialization",nullable = false,length = 50)
-    private List<String> specialization =new ArrayList<>();
+    @Column(name = "specialization", length = 50, nullable = false)
+    private String specialization;
 
-    @Column(name = "contact_number",nullable = false,length = 10)
-    private String contactNumber ;
+    @Column(name = "contact_number", nullable = false)
+    private Long contactNumber;
 
-    @Column(name = "email_address",nullable = false,length = 50)
-    private String emailAddress  ;
+    @Column(name = "email_address", length = 50, nullable = false)
+    private String emailAddress;
 
-    @Column(name = "years_of_experience",nullable = false,length = 4)
-    private Long yearsOfExperience ;
+    @Column(name = "years_of_experience", nullable = false)
+    private Integer yearsOfExperience;
 
-    @Column(name = "languages_known",nullable = false,length = 50)
-    private List<String> languagesKnown = new ArrayList<>()  ;
+    @Column(name = "languages_known", length = 50, nullable = false)
+    private String languagesKnown;
 
-    @Column(name = "consultation_hours",nullable = false,length = 30)
-    private Time consultationHours;
+    @Column(name = "consultation_hours", length = 30, nullable = false)
+    private String consultationHours;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "availability_days",nullable = false, length=30,columnDefinition = "VARCHAR(30)")
+    @Column(name = "availability_days", length = 30, nullable = false)
     private List<daysEnum> availabilityDays;
+
+    // Constructors, getters, setters, and other methods
 }

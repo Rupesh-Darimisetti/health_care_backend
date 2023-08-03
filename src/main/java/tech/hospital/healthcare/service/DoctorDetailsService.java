@@ -1,43 +1,48 @@
 package tech.hospital.healthcare.service;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tech.hospital.healthcare.exception.UserNotFoundException;
 import tech.hospital.healthcare.model.DoctorDetails;
-import tech.hospital.healthcare.repo.DoctorDetailsRepo;
-
-import java.util.List;
-import java.util.UUID;
+import tech.hospital.healthcare.repo.DoctorDetailsRepository;
 
 @Service
-@Transactional
 public class DoctorDetailsService {
-    private final DoctorDetailsRepo doctorDetailsRepo;
+    private final DoctorDetailsRepository doctorDetailsRepository;
 
     @Autowired
-    public DoctorDetailsService(DoctorDetailsRepo doctorDetailsRepo){
-        this.doctorDetailsRepo = doctorDetailsRepo;
+    public DoctorDetailsService(DoctorDetailsRepository doctorDetailsRepository) {
+        this.doctorDetailsRepository = doctorDetailsRepository;
     }
 
-    public DoctorDetails addDoctor(DoctorDetails doctorDetails){
-        doctorDetails.setDoctorCode(UUID.randomUUID().toString());
-        return doctorDetailsRepo.save(doctorDetails);
+    // Add methods for business logic related to DoctorDetails entity
+
+    public DoctorDetails saveDoctorDetails(DoctorDetails doctorDetails) {
+        return doctorDetailsRepository.save(doctorDetails);
     }
 
-    public List<DoctorDetails> findAllDoctorDetails(){
-        return doctorDetailsRepo.findAll();
+    public DoctorDetails getDoctorDetailsById(Long doctorId) {
+        return doctorDetailsRepository.findById(doctorId).orElse(null);
     }
 
-    public DoctorDetails updateDoctorDetails(DoctorDetails doctorDetails){
-        return doctorDetailsRepo.save(doctorDetails);
-    }
-    public DoctorDetails findDoctorDetailsById(Long  doctor_id){
-        return doctorDetailsRepo.findDoctorDetailsById(doctor_id)
-                .orElseThrow(()-> new UserNotFoundException("Doctor by id " + doctor_id+" was not found"));
+    public void deleteDoctorDetails(Long doctorId) {
+        doctorDetailsRepository.deleteById(doctorId);
     }
 
-    public void deleteDoctorDetails(Long doctor_id){
-        doctorDetailsRepo.deleteDoctorDetailsById(doctor_id);
-    }
+    // Add more methods as needed
+
+//    public List<DoctorDetails> findAllDoctorDetails(){
+//        return doctorDetailsRepo.findAll();
+//    }
+//
+//    public DoctorDetails updateDoctorDetails(DoctorDetails doctorDetails){
+//        return doctorDetailsRepo.save(doctorDetails);
+//    }
+//    public DoctorDetails findDoctorDetailsById(Long  doctor_id){
+//        return doctorDetailsRepo.findDoctorDetailsById(doctor_id)
+//                .orElseThrow(()-> new UserNotFoundException("Doctor by id " + doctor_id+" was not found"));
+//    }
+//
+//    public void deleteDoctorDetails(Long doctor_id){
+//        doctorDetailsRepo.deleteDoctorDetailsById(doctor_id);
+//    }
 }

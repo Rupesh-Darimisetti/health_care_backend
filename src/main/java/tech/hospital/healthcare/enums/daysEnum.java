@@ -4,6 +4,7 @@ public enum daysEnum {
     monday,
     tuesday,
     wednesday,
+    thursday,
     friday,
     saturday,
     sunday

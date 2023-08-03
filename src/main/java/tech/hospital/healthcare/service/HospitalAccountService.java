@@ -1,55 +1,44 @@
 package tech.hospital.healthcare.service;
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tech.hospital.healthcare.exception.UserNotFoundException;
 import tech.hospital.healthcare.model.HospitalAccount;
 import tech.hospital.healthcare.repo.HospitalAccountRepository;
 
+import java.util.List;
+
 @Service
+@Transactional
 public class HospitalAccountService {
-    private final HospitalAccountRepository hospitalRepository;
-
+    private final HospitalAccountRepository hospitalAccountRepository;
     @Autowired
-    public HospitalAccountService(HospitalAccountRepository hospitalRepository) {
-        this.hospitalRepository = hospitalRepository;
+    public HospitalAccountService(HospitalAccountRepository hospitalAccountRepository) {
+        this.hospitalAccountRepository = hospitalAccountRepository;
     }
 
-    // Add methods for business logic related to HospitalAccount entity
-
-    public HospitalAccount saveHospital(HospitalAccount hospital) {
-        return hospitalRepository.save(hospital);
+    public HospitalAccount getHospitalById(Integer h_id) {
+        return hospitalAccountRepository.findHospitalAccountById(h_id)
+                .orElseThrow(()-> new UserNotFoundException("Hospital by id " + h_id + " was not found."));
     }
 
-    public HospitalAccount getHospitalById(Long hId) {
-        return hospitalRepository.findById(hId).orElse(null);
+    public HospitalAccount addHospitalAccount(HospitalAccount hospitalAccount){
+        return hospitalAccountRepository.save(hospitalAccount);
     }
 
-    public void deleteHospital(Long hId) {
-        hospitalRepository.deleteById(hId);
+    public List<HospitalAccount> findAllHospitalAccounts(){
+        return hospitalAccountRepository.findAll();
     }
 
-    // Add more methods as needed
+    public HospitalAccount updateHospitalAccount(Integer hospitalId, HospitalAccount hospitalAccount){
+        return hospitalAccountRepository.save(hospitalAccount);
+    }
 
 
-//    public HospitalAccount addHospitalAccount(HospitalAccount hospitalAccount){
-//        return hospitalAccountRepo.save(hospitalAccount);
-//    }
 
-//    public List<HospitalAccount> findAllHospitalAccount(){
-//        return hospitalAccountRepo.findAll();
-//    }
-//
-//    public HospitalAccount updateHospitalAccount(HospitalAccount hospitalAccount){
-//        return hospitalAccountRepo.save(hospitalAccount);
-//    }
-//
-//    public HospitalAccount findHospitalAccountById(Long h_id){
-//        return hospitalAccountRepo.findHospitalAccountById(h_id)
-//                .orElseThrow(()-> new UserNotFoundException("Hospital by id " + h_id + " was not found."));
-//    }
-//
-//    public void deleteHospitalAccount(Long h_id){
-//        hospitalAccountRepo.deleteHospitalAccountById(h_id);
-//    }
+    public void deleteHospitalAccountById(Integer h_id){
+        hospitalAccountRepository.deleteHospitalAccountById(h_id);
+    }
 }

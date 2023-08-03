@@ -4,53 +4,56 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "hospital_account")
-public class HospitalAccount {
+public class HospitalAccount implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "h_id", nullable = false)
-    private Long hId;
+    private Long id;
+    @Column(name = "h_id", columnDefinition = "numeric(8) ", nullable=false)
+    private Integer h_id;
 
-    @Column(name = "h_password", length = 25, nullable = false)
-    private String hPassword;
+    @Column(name = "h_password",columnDefinition = "varchar(25) ", nullable=false)
+    private String h_password;
 
-    @Column(name = "h_name", length = 30, nullable = false)
-    private String hName;
+    @Column(name = "h_name",columnDefinition = "varchar(30) ", nullable=false)
+    private String h_name;
 
-    @Column(name = "h_street", length = 25, nullable = false)
-    private String hStreet;
+    @Column(name = "h_street", columnDefinition = "varchar(25) ", nullable=false)
+    private String h_street;
 
-    @Column(name = "h_zip_code", nullable = false)
-    private Long hZipCode;
+    @Column(name = "h_zip_code",columnDefinition = "numeric(10) ", nullable=false)
+    private Integer h_zip_code;
 
-    @Column(name = "h_city", length = 25, nullable = false)
-    private String hCity;
+    @Column(name = "h_city",columnDefinition = "varchar(25) ", nullable=false)
+    private String h_city;
 
-    @Column(name = "h_state", length = 25, nullable = false)
-    private String hState;
+    @Column(name = "h_state", columnDefinition = "varchar(25) ", nullable=false)
+    private String h_state;
 
-    @Column(name = "h_contact_number", nullable = false)
-    private Long hContactNumber;
+    @Column(name = "h_contact_number",columnDefinition = "numeric(10) ", nullable=false)
+    private Long h_contact_number;
 
-    @Column(name = "h_email", length = 25, nullable = false)
-    private String hEmail;
+    @Column(name = "h_email", columnDefinition = "varchar(25) ", nullable=false)
+    private String h_email;
 
-    @Column(name = "h_website", length = 25)
-    private String hWebsite;
+    @Column(name = "h_website", columnDefinition = "varchar(25)")
+    private String h_website;
 
-    @Column(name = "h_lab_facility", length = 10)
+    @Column(name = "h_lab_facility", columnDefinition = "varchar(10)")
     private String hLabFacility;
 
-    @Column(name = "h_insurance_acceptance", length = 25)
+    @Column(name = "h_insurance_acceptance",columnDefinition = "varchar(25)")
     private String hInsuranceAcceptance;
 
-    @Column(name = "h_scanning_facility", length = 25)
+    @Column(name = "h_scanning_facility", columnDefinition = "varchar(25)")
     private String hScanningFacility;
-
+//    @Column(nullable = false, updatable = false)
+//    private String hospitalAccountCode;
     // Constructors, getters, setters, and other methods
 }

@@ -52,7 +52,7 @@ public class DoctorDetails {
     private Integer yearsOfExperience;
 
     @Column(name = "languages_known", length = 50, nullable = false)
-    private String languagesKnown;
+    private List<String> languagesKnown;
 
     @Column(name = "consultation_hours", length = 30, nullable = false)
     private String consultationHours;

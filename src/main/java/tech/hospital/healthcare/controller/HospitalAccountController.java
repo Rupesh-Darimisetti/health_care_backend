@@ -5,11 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.hospital.healthcare.model.HospitalAccount;
-import tech.hospital.healthcare.repo.HospitalAccountRepository;
 import tech.hospital.healthcare.service.HospitalAccountService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/hospitals")
@@ -40,24 +38,13 @@ public class HospitalAccountController {
     }
 
     @PutMapping("update/{h_id}")
-    public ResponseEntity<HospitalAccount> updateHospital(@PathVariable Integer hospitalId, @RequestBody HospitalAccount hospital) {
+    public ResponseEntity<HospitalAccount> updateHospital(@PathVariable("h_id") Integer hospitalId, @RequestBody HospitalAccount hospital) {
         HospitalAccount updateHospitalAccount=hospitalAccountService.updateHospitalAccount(hospitalId,hospital);
         return new ResponseEntity<>(updateHospitalAccount,HttpStatus.OK);
-        //        Optional<HospitalAccount> hospitalOptional = hospitalAccountService.findById(hospitalId);
-//        if (hospitalOptional.isPresent()) {
-//            HospitalAccount existingHospital = hospitalOptional.get();
-//            existingHospital.setHName(hospital.getHName());
-//            existingHospital.setHStreet(hospital.getHStreet());
-//            // Set other properties as needed
-//            HospitalAccount updatedHospital = hospitalAccountService.save(existingHospital);
-//            return ResponseEntity.ok(updatedHospital);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
     }
 
     @DeleteMapping("delete/{h_id}")
-    public ResponseEntity<Void> deleteHospital(@PathVariable Integer hospitalId) {
+    public ResponseEntity<Void> deleteHospital(@PathVariable("h_id") Integer hospitalId) {
         hospitalAccountService.deleteHospitalAccountById(hospitalId);
 //        return ResponseEntity.noContent().build();
     return new ResponseEntity<>(HttpStatus.OK);

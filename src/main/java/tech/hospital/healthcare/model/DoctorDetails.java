@@ -1,12 +1,14 @@
 package tech.hospital.healthcare.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.*;
 import tech.hospital.healthcare.enums.daysEnum;
 import tech.hospital.healthcare.enums.genderEnum;
+import tech.hospital.healthcare.helper.StringListDeserializer;
+import tech.hospital.healthcare.helper.StringToListConverter;
 
-import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,16 +23,18 @@ public class DoctorDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doctor_id", nullable = false)
-    private Long doctorId;
+    private Long doctor_id;
 
-    @Column(name = "h_id", nullable = false)
-    private Long hId;
+    @ManyToOne
+    @JsonBackReference //Manage back part of relationship
+    @JoinColumn(name = "h_id",referencedColumnName = "h_id")
+    private HospitalAccount hospitalAccount;
 
     @Column(name = "first_name", length = 30, nullable = false)
-    private String firstName;
+    private String first_name;
 
     @Column(name = "last_name", length = 30, nullable = false)
-    private String lastName;
+    private String last_name;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", length = 30, nullable = false)
@@ -43,23 +47,24 @@ public class DoctorDetails {
     private String specialization;
 
     @Column(name = "contact_number", nullable = false)
-    private Long contactNumber;
+    private Long contact_number;
 
     @Column(name = "email_address", length = 50, nullable = false)
-    private String emailAddress;
+    private String email_address;
 
     @Column(name = "years_of_experience", nullable = false)
-    private Integer yearsOfExperience;
-
+    private Integer years_of_experience;
+    @Convert(converter = StringToListConverter.class)
+    @JsonDeserialize(using = StringListDeserializer.class)
     @Column(name = "languages_known", length = 50, nullable = false)
-    private List<String> languagesKnown;
+    private List<String> languages_known = new ArrayList<>();
 
     @Column(name = "consultation_hours", length = 30, nullable = false)
-    private String consultationHours;
+    private String consultation_hours;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "availability_days", length = 30, nullable = false)
-    private List<daysEnum> availabilityDays;
+    private List<daysEnum> availability_days = new ArrayList<>();
 
     // Constructors, getters, setters, and other methods
 }

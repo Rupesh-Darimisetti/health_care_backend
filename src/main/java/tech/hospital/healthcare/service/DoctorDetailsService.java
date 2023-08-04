@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import tech.hospital.healthcare.model.DoctorDetails;
 import tech.hospital.healthcare.repo.DoctorDetailsRepository;
 
+import java.util.List;
+
 @Service
 public class DoctorDetailsService {
     private final DoctorDetailsRepository doctorDetailsRepository;
@@ -26,6 +28,10 @@ public class DoctorDetailsService {
 
     public void deleteDoctorDetails(Long doctorId) {
         doctorDetailsRepository.deleteById(doctorId);
+    }
+
+    public List<DoctorDetails> getDoctorDetailsByHospitalId(Long hospitalId) {
+    return doctorDetailsRepository.findByHospitalAccountId(hospitalId);
     }
 
     // Add more methods as needed

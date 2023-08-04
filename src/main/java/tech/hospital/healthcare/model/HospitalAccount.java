@@ -1,9 +1,12 @@
 package tech.hospital.healthcare.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.print.Doc;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,7 +18,7 @@ public class HospitalAccount implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "h_id", columnDefinition = "numeric(8) ", nullable=false)
+    @Column(name = "h_id", columnDefinition = "numeric(8) ", nullable=false, unique = true)
     private Integer h_id;
 
     @Column(name = "h_password",columnDefinition = "varchar(25) ", nullable=false)
@@ -53,7 +56,9 @@ public class HospitalAccount implements Serializable {
 
     @Column(name = "h_scanning_facility", columnDefinition = "varchar(25)")
     private String hScanningFacility;
-//    @Column(nullable = false, updatable = false)
-//    private String hospitalAccountCode;
+
+    @OneToMany(mappedBy = "hospitalAccount",cascade = CascadeType.ALL)
+    @JsonManagedReference // Manage forward part of the relationship
+     List<DoctorDetails> doctorDetailsList;
     // Constructors, getters, setters, and other methods
 }

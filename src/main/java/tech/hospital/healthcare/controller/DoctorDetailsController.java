@@ -52,9 +52,9 @@ private final HospitalAccountRepository hospitalAccountRepository;
 
     @PostMapping("/add")
     public ResponseEntity<DoctorDetails> createDoctor(@RequestBody DoctorDetails doctor) {
-        HospitalAccount savedHospital = hospitalAccountRepository.save(doctor.getHospitalAccount());
+//        HospitalAccount savedHospital = hospitalAccountRepository.save(doctor.getHospitalAccount());
         DoctorDetails savedDoctor = doctorRepository.save(doctor);
-        ResponseEntity.ok(savedHospital);
+//        ResponseEntity.ok(savedHospital);
         return ResponseEntity.ok(savedDoctor);
     }
 
@@ -65,7 +65,7 @@ private final HospitalAccountRepository hospitalAccountRepository;
             DoctorDetails existingDoctor = doctorOptional.get();
             existingDoctor.setDoctor_id(existingDoctor.getDoctor_id());
             existingDoctor.setHospitalAccount(doctor.getHospitalAccount());
-//            existingDoctor.setHospitalDoctors(doctor.getHospitalDoctors());
+            existingDoctor.setHospitalAccount(doctor.getHospitalAccount());
             existingDoctor.setFirst_name(doctor.getFirst_name());
             existingDoctor.setLast_name(doctor.getLast_name());
             existingDoctor.setGender(doctor.getGender());
@@ -86,7 +86,7 @@ private final HospitalAccountRepository hospitalAccountRepository;
     }
 
     @DeleteMapping("delete/{doctorId}")
-    public ResponseEntity<Void> deleteDoctor(@PathVariable Long doctorId) {
+    public ResponseEntity<?> deleteDoctor(@PathVariable Long doctorId) {
         List<DoctorDetails> doctorsWithRelation = getDoctorsWithRelation();
         getDoctorsWithRelation().stream()
                 .filter(hospitalAccount -> hospitalAccount.getHospitalAccount().getH_id().equals(doctorId))

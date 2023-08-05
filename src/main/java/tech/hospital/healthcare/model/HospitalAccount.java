@@ -59,6 +59,10 @@ public class HospitalAccount implements Serializable {
 
     @OneToMany(mappedBy = "hospitalAccount",cascade = CascadeType.ALL)
     @JsonManagedReference // Manage forward part of the relationship
-     List<DoctorDetails> doctorDetailsList;
+    private List<DoctorDetails> doctorDetailsList;
+
+    @OneToOne(mappedBy = "hospitalAccount",cascade = CascadeType.ALL)
+    @JsonManagedReference // Manage forward part of the relationship
+    private HospitalBeds hospitalTotalBeds;
     // Constructors, getters, setters, and other methods
 }

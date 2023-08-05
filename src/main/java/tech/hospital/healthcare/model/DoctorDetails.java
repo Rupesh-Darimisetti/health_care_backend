@@ -2,13 +2,16 @@ package tech.hospital.healthcare.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 import tech.hospital.healthcare.enums.daysEnum;
 import tech.hospital.healthcare.enums.genderEnum;
+import tech.hospital.healthcare.helper.CustomLocalTimeDeserializer;
 import tech.hospital.healthcare.helper.StringListDeserializer;
 import tech.hospital.healthcare.helper.StringToListConverter;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +62,11 @@ public class DoctorDetails {
     @Column(name = "languages_known", length = 50, nullable = false)
     private List<String> languages_known = new ArrayList<>();
 
+
+//    @Convert(converter = TimeStringToTimeListConverter.class)
+    @JsonDeserialize(using = CustomLocalTimeDeserializer.class)
     @Column(name = "consultation_hours", length = 30, nullable = false)
-    private String consultation_hours;
+    private List<LocalTime> consultation_hours =new ArrayList<>(2);
 
     @Enumerated(EnumType.STRING)
     @Column(name = "availability_days", length = 30, nullable = false)
